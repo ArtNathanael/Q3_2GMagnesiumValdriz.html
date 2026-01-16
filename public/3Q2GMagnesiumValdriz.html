@@ -39,7 +39,7 @@
         margin-top: 12px;
     }
 
-    input, select, textarea {
+    input:not([type="radio"]), select, textarea {
         width: 98%;
         padding: 8px;
         margin-top: 4px;
@@ -80,11 +80,11 @@
 </style>
 
 <script>
-function confirmSubmit() {
+function Submit() {
     return confirm("Confirm to submit this application.");
 }
 
-function confirmReset() {
+function Reset() {
     return confirm("Confirm to clear all information.");
 }
 
@@ -100,10 +100,10 @@ function checkEmpty(element) {
 
 <body>
 
-<form method="post" action="submit" onsubmit="return confirmSubmit()" onreset="return confirmReset()">
+<form method="post" action="submit" onsubmit="return Submit()" onreset="return Reset()">
 
 <fieldset>
-<legend>Basic Student Information</legend>
+<legend>Student Information</legend>
 
 <label>Student ID
     <input type="number" required onblur="checkEmpty(this)">
@@ -141,7 +141,7 @@ function checkEmpty(element) {
     </select>
 </label>
 
-<label> Intern / Extern
+<label>
     <input type="radio" name="status" value="int" required> Intern  
     <input type="radio" name="status" value="ext"> Extern
 </label>
@@ -149,11 +149,11 @@ function checkEmpty(element) {
 <label>Preferred Organization / Club
     <select required>
         <option value="">-- Select Club --</option>
-        <option value="robot">Robotics Club</option>
-        <option value="journal">Journalism Club</option>
-        <option value="music">Music Ensemble</option>
-        <option value="science">Science Society</option>
-        <option value="sports">Sports Leadership</option>
+        <option value="robot">Intyale</option>
+        <option value="journal">Astrosoc</option>
+        <option value="music">Himig Agham</option>
+        <option value="science">Alianti</option>
+        <option value="sports">Model United Nations</option>
     </select>
 </label>
 
