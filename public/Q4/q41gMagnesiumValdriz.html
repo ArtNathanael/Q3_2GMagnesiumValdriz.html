@@ -110,19 +110,20 @@
     
 </script>
 
+<form>
 <fieldset>
     <legend>Add a Movie</legend>
 
 <label>Title:
-    <input type="text" required onblur="checkEmpty(this)">
+    <input type="text" id="theTitle" required onblur="checkEmpty(this)">
 </label>
 
 <label>Year:
-    <input type="number" required onblur="checkEmpty(this)">
+    <input type="number" id="theYear" required onblur="checkEmpty(this)">
 </label>
 
 <label> Genre:
-    <select required>
+    <select id="theGenre" required>
         <option value="action"> Action </option>
         <option value="horror"> Horror </option>
         <option value="fantasy"> Fantasy </option>
