@@ -22,24 +22,12 @@
     border: 4px solid #caa44b; 
 } 
 
-    fieldset {
-    border: 2px solid #5aa9e6; 
-    margin-bottom: 20px;
-    padding: 15px;
-    border-radius: 8px;
-}
-
-    legend {
-    font-weight: bold;
-    color: #caa44b;
-}
-
     label {
     display: block;
     margin-top: 12px;
 }
 
-    input:not([type="radio"]), select, textarea {
+    input, select, textarea {
     width: 100%;
     padding: 8px;
     margin-top: 4px;
@@ -69,7 +57,7 @@
     margin: 10px;
     border: none;
     border-radius: 5px;
-    background: #caa44b;
+    background: #00008b;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -89,30 +77,18 @@
     .star.active {
     color: gold;
 }
+
+    .form-heading {
+    font-size: 50px;       
+    font-weight: bold;     
+    color: #000000;       
+    text-align: center;     
+    margin-bottom: 30px;    
+}
 </style>
 
-<script>
-    function Submit() {
-        movieList = {};
-        text.push(movieList);
-        year.push(movieList);
-        genre.push(movieList);
-
-    }
-    
-    function checkEmpty(element) {
-        if (element.value.trim() === "") {
-            element.classList.add("error");
-        } else {
-            element.classList.remove("error");
-        }
-    }
-    
-</script>
-
 <form>
-<fieldset>
-    <legend>Add a Movie</legend>
+<h1 class="form-heading">Add a Movie</h1>
 
 <label>Title:
     <input type="text" id="theTitle" required onblur="checkEmpty(this)">
@@ -134,7 +110,7 @@
     </select>
 </label>
 
-<label>
+<label id="theStarRating">
     <span class="star" data-value="1"> &#9733; </span>
     <span class="star" data-value="2"> &#9733; </span>
     <span class="star" data-value="3"> &#9733; </span>
@@ -145,8 +121,43 @@
 <div class="buttons">
     <button type="submit">Add Movie</button>
 </div>
-
+<h1 class="form-heading">Movie List</h1>
 </form>
 
+<script>
+    const ratingstar = document.querySelectorAll('#theStarRating .star');
+    let valueStar = [];
+    ratingstar.forEach((star) => {
+        star.addEventListener('click', () => {
+            const value = parseInt(star.dataset.value);
+            ratingstar.forEach(s => s.classList.remove('active'));
+            ratingstar.forEach(s => {
+                if (parseInt(s.dataset.value) <= value) {
+                    s.classList.add('active');
+                }
+            });
+            valueStar = Array.from(document.querySelectorAll('#theStarRating .star.active'));
+        });
+    });
+    function Submit() {
+        const valueTitle = document.getElementById("theTitle").value
+        const valueYear = document.getElementById("theYear").value
+        const valueGenre = document.getElementById("theGenre").value
+        const movieList = {
+            title: valueTitle,
+            year: valueYear,
+            genre: valueGenre,
+            rating: valueStar.map(s => parseInt(s.dataset.value))
+        };       
+
+    }
+    function checkEmpty(element) {
+        if (element.value.trim() === "") {
+            element.classList.add("error");
+        } else {
+            element.classList.remove("error");
+        }
+    }
+</script>
 </body>
 </html>
