@@ -87,7 +87,7 @@
 }
 </style>
 
-<form>
+<form id = "movieForm">
 <h1 class="form-heading">Add a Movie</h1>
 
 <label>Title:
@@ -150,9 +150,9 @@
             rating: valueStar.map(s => parseInt(s.dataset.value))
         };       
         let movies = JSON.parse(localStorage.getItem('movies')) || [];
-        movies.push(movie);
+        movies.push(movieList);
         localStorage.setItem('movies', JSON.stringify(movies));
-        console.log("Movie saved:", movie);
+        console.log("Movie saved:", movieList);
 
         document.getElementById("movieForm").reset();
         ratingstar.forEach(s => s.classList.remove('active'));
@@ -161,6 +161,7 @@
     document.getElementById('movieForm').addEventListener('submit', function(e){
         e.preventDefault();
         Submit();
+    });
     function checkEmpty(element) {
         if (element.value.trim() === "") {
             element.classList.add("error");
