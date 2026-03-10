@@ -149,8 +149,18 @@
             genre: valueGenre,
             rating: valueStar.map(s => parseInt(s.dataset.value))
         };       
+        let movies = JSON.parse(localStorage.getItem('movies')) || [];
+        movies.push(movie);
+        localStorage.setItem('movies', JSON.stringify(movies));
+        console.log("Movie saved:", movie);
 
+        document.getElementById("movieForm").reset();
+        ratingstar.forEach(s => s.classList.remove('active'));
+        valueStar = [];
     }
+    document.getElementById('movieForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        Submit();
     function checkEmpty(element) {
         if (element.value.trim() === "") {
             element.classList.add("error");
