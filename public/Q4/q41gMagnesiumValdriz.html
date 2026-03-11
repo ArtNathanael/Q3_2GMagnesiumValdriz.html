@@ -100,13 +100,13 @@
 
 <label> Genre:
     <select id="theGenre" required>
-        <option value="action"> Action </option>
-        <option value="horror"> Horror </option>
-        <option value="fantasy"> Fantasy </option>
-        <option value="drama"> Drama </option>
-        <option value="thriller">Thriller </option>
-        <option value="romance">Romance</option>
-        <option value="sci-fi">Sci-Fi</option>
+        <option value="Action"> Action </option>
+        <option value="Horror"> Horror </option>
+        <option value="Fantasy"> Fantasy </option>
+        <option value="Drama"> Drama </option>
+        <option value="Thriller">Thriller </option>
+        <option value="Romance">Romance</option>
+        <option value="Sci-Fi">Sci-Fi</option>
     </select>
 </label>
 
@@ -177,9 +177,7 @@
         movies.forEach(movie => {
             const movieDiv = document.createElement("div");
             movieDiv.innerHTML = `
-            <h3>${movie.title} (${movie.year})</h3>
-                <p>Genre: ${movie.genre}</p>
-                <p>Rating: ${createStars(movie.rating)}</p>
+                <p>Title: ${movie.title}, Year: (${movie.year}), Genre: ${movie.genre}, Rating: ${createStars(movie.rating)}</p>
                 <hr>`;
                 movieDisplay.appendChild(movieDiv);
                 });
