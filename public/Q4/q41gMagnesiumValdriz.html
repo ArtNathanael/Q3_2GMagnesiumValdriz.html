@@ -122,6 +122,7 @@
     <button type="submit">Add Movie</button>
 </div>
 <h1 class="form-heading">Movie List</h1>
+<div id="movieDisplay"></div>
 </form>
 
 <script>
@@ -153,7 +154,7 @@
         movies.push(movieList);
         localStorage.setItem('movies', JSON.stringify(movies));
         console.log("Movie saved:", movieList);
-
+        displayMovies();
         document.getElementById("movieForm").reset();
         ratingstar.forEach(s => s.classList.remove('active'));
         valueStar = [];
@@ -162,6 +163,27 @@
         e.preventDefault();
         Submit();
     });
+    function createStars(rating) {
+        let stars = "";
+        for (let i = 0; i < rating.length; i++) {
+            stars += '<span class="star active">&#9733;</span>';
+        }
+        return stars;
+    }
+    function displayMovies() {
+        const movieDisplay = document.getElementById("movieDisplay");
+        const movies = JSON.parse(localStorage.getItem("movies")) || [];
+        movieDisplay.innerHTML = "";
+        movies.forEach(movie => {
+            const movieDiv = document.createElement("div");
+            movieDiv.innerHTML = `
+            <h3>${movie.title} (${movie.year})</h3>
+                <p>Genre: ${movie.genre}</p>
+                <p>Rating: ${createStars(movie.rating)}</p>
+                <hr>`;
+                movieDisplay.appendChild(movieDiv);
+                });
+}
     function checkEmpty(element) {
         if (element.value.trim() === "") {
             element.classList.add("error");
@@ -169,6 +191,7 @@
             element.classList.remove("error");
         }
     }
+    displayMovies();
 </script>
 </body>
 </html>
