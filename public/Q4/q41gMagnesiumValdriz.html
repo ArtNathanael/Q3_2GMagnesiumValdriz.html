@@ -174,7 +174,7 @@
         }
         localStorage.setItem('movies', JSON.stringify(movies));
         console.log("Movie database:", movies);
-        displayMovies();
+        displayMovies(); 
         document.getElementById("movieForm").reset();
         ratingstar.forEach(s => s.classList.remove('active'));
         valueStar = [];
