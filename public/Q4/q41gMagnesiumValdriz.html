@@ -146,6 +146,8 @@
         const valueGenre = document.getElementById("theGenre").value
         const newValueStar = valueStar.length;
         let movies = JSON.parse(localStorage.getItem('movies')) || [];
+        /* This is my first comment in all time, I think. The line of code after this is case insensitive. 
+        Sorry, ma'am, if this is supposed to be case sensitive TT. */
         const existingMovieIndex = movies.findIndex(m => m.title.toLowerCase() === valueTitle.toLowerCase());
         if (existingMovieIndex !== -1) {
             const movie = movies[existingMovieIndex];
