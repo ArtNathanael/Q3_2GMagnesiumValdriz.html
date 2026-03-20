@@ -141,9 +141,9 @@
         });
     });
     function Submit() {
-        const valueTitle = document.getElementById("theTitle").value
-        const valueYear = document.getElementById("theYear").value
-        const valueGenre = document.getElementById("theGenre").value
+        const valueTitle = document.getElementById("theTitle").value.trim();
+        const valueYear = document.getElementById("theYear").value;
+        const valueGenre = document.getElementById("theGenre").value;
         const newValueStar = valueStar.length;
         let movies = JSON.parse(localStorage.getItem('movies')) || [];
         /* This is my first comment in all time, I think. The line of code after this is case insensitive. 
