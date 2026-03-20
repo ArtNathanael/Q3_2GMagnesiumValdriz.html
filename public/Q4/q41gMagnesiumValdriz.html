@@ -177,15 +177,18 @@
         movies.forEach(movie => {
             const movieDiv = document.createElement("div");
             movieDiv.innerHTML = `
-                <p>Title: ${movie.title}, Year: (${movie.year}), Genre: ${movie.genre}, Rating: ${createStars(movie.rating)} </p>
+                <p>Title: ${movie.title}, Year: (${movie.year}), Genre: ${movie.genre}, Rating: ${createStars(movie.rating)} <button type="button" onclick="Delete(${i})" style="background: #cc0000; padding: 5px 10px; margin-left: 10px;">Delete</button> </p>
                 <hr>`;
                 movieDisplay.appendChild(movieDiv); 
                 });
     }
     function Delete() {
-        return confirm("Are you sure you want to delete?");
+        const ok = confirm("Are you sure you want to delete?");
         if (ok){
-            
+            let movies = JSON.parse(localStorage.getItem('movies')) || [];
+            movies.splice(index, 1);
+            localStorage.setItem('movies', JSON.stringify(movies));
+            displayMovies();
         }
     }
     function checkEmpty(element) {
