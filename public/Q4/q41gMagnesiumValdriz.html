@@ -144,16 +144,32 @@
         const valueTitle = document.getElementById("theTitle").value
         const valueYear = document.getElementById("theYear").value
         const valueGenre = document.getElementById("theGenre").value
-        const movieList = {
-            title: valueTitle,
-            year: valueYear,
-            genre: valueGenre,
-            rating: valueStar.map(s => parseInt(s.dataset.value))
-        };       
+        const newValueStar = valueStar.length;
         let movies = JSON.parse(localStorage.getItem('movies')) || [];
+        const existingMovieIndex = movies.findIndex(m => m.title.toLowerCase() === valueTitle.toLowerCase());
+        if (existingMovieIndex !== -1) {
+            const movie = movies[existingMovieIndex];
+            movie.year = valueYear;
+            movie.genre = valueGenre;
+            if (!Array.isArray(movie.allRatings)) {
+                movie.allRatings = [movie.rating];
+            }
+            movie.allRatings.push(newValueStar);
+            const sum = movie.allRatings.reduce((a, b) => a + b, 0);
+            movie.rating = sum / movie.allRatings.length;
+        }
+        else {
+            const movieList = {
+                title: valueTitle,
+                year: valueYear,
+                genre: valueGenre,
+                rating: newValueStar,
+                allRatings: [newValueStar]
+            };       
         movies.push(movieList);
+        }
         localStorage.setItem('movies', JSON.stringify(movies));
-        console.log("Movie saved:", movieList);
+        console.log("Movie database:", movies);
         displayMovies();
         document.getElementById("movieForm").reset();
         ratingstar.forEach(s => s.classList.remove('active'));
@@ -165,16 +181,22 @@
     });
     function createStars(rating) {
         let stars = "";
-        for (let i = 0; i < rating.length; i++) {
-            stars += '<span class="star active">&#9733;</span>';
+        const averageRating = Math.round(rating);
+        for (let i = 1; i <= 5; i++) {
+            if (i <= averageRating) {
+                stars += '<span class="star active">&#9733;</span>';
+            }
+            else {
+                stars += '<span class="star">&#9733;</span>';
+            }
         }
-        return stars;
+        return `(${rating.toFixed(1)}) ${stars}`;
     }
     function displayMovies() {
         const movieDisplay = document.getElementById("movieDisplay");
         const movies = JSON.parse(localStorage.getItem("movies")) || [];
         movieDisplay.innerHTML = "";
-        movies.forEach(movie => {
+        movies.forEach((movie, i) => {
             const movieDiv = document.createElement("div");
             movieDiv.innerHTML = `
                 <p>Title: ${movie.title}, Year: (${movie.year}), Genre: ${movie.genre}, Rating: ${createStars(movie.rating)} <button type="button" onclick="Delete(${i})" style="background: #cc0000; padding: 5px 10px; margin-left: 10px;">Delete</button> </p>
@@ -182,9 +204,9 @@
                 movieDisplay.appendChild(movieDiv); 
                 });
     }
-    function Delete() {
-        const ok = confirm("Are you sure you want to delete?");
-        if (ok){
+    function Delete(index) {
+        const Ok = confirm("Are you sure you want to delete?");
+        if (Ok){
             let movies = JSON.parse(localStorage.getItem('movies')) || [];
             movies.splice(index, 1);
             localStorage.setItem('movies', JSON.stringify(movies));
